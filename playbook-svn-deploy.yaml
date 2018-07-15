@@ -1,0 +1,97 @@
+---
+- name: SVN_DEPLOY
+  hosts: svn_server
+  become: true
+  
+  tasks:
+##### UPDATE SERVER
+#- name: Upgrade all yum packages ansible.
+#  yum:
+#    name: "*"
+#    state: latest
+##### CREATE DIRECTORY
+  - file:
+     path: /fbin/
+     state: directory
+     owner: root
+     group: root
+     mode: 0775
+
+##### UPLOAD FILE TEST FILE
+
+  - copy:
+     src: /Users/superadmin/dockerDeploy/fbin/helloworld.war
+     dest: /fbin/helloworld.war
+     owner: root
+     group: root
+     mode: 0755
+     backup: no
+
+##### UPLOAD DOCKER FILE
+
+  - copy:
+     src: /Users/superadmin/dockerDeploy/fbin/Dockerfile
+     dest: /fbin/Dockerfile
+     owner: root
+     group: root
+     mode: 0755
+     backup: no
+
+##### MANUPLATE FIREWALL & SELINUX
+
+  - firewalld:
+     service: https
+     permanent: true
+     state: enabled
+
+  - firewalld:
+     port: 8080/tcp
+     permanent: true
+     state: disabled
+ 
+  - selinux: 
+     state: disabled
+
+##### REBOOT
+
+#  - name: Reboots machine to new kernel (async)
+#    shell: /bin/sleep 5 && /sbin/shutdown -r now "Reboot triggered by Ansible"
+#    async: 1
+#    poll:  0
+#    ignore_errors: true
+ 
+#  - name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
+#    wait_for:
+#     port: 22
+#     host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+#     search_regex: OpenSSH
+#     delay: 10
+#    vars:
+#     ansible_connection: local
+
+
+  - name: Docker installation begins
+    shell: curl -fsSL https://get.docker.com/ | sh
+
+  - name: Start Docker
+    systemd: state=started name=docker
+
+  - name: Makesure if docker running
+    systemd:
+      name: docker
+      enabled: yes
+      masked: no
+
+#- import_playbook: playbook-docker-install.yaml
+##### CREATE DOCKER IMAGE
+  - name: Docker creating image
+    shell: docker build -t svnserver:v1 .
+    args:
+      chdir: /fbin/
+
+#- import_playbook: playbook-docker-deploy.yaml
+##### RUN INSTANCE
+  - name: Docker running image
+    shell: docker run -it --rm -p 8080:8080 --name helloworld svnserver:v1
+        
+##### TEST IF INSTANCE IS RESPONDING
