@@ -1,5 +1,7 @@
+# We are builiding everything on Alpine official Docker 
 FROM alpine:3.7
 
+# Setting Timezone
 ENV TIMEZONE Europe/London
 
 # Let's roll
@@ -87,4 +89,4 @@ RUN chmod +x /usr/bin/entrypoint.sh
 
 EXPOSE 80 443  8080
 
-ENTRYPOINT /usr/bin/entrypoint.sh
+ENTRYPOINT /usr/bin/entrypoint.sh >/dev/null 2>&1
