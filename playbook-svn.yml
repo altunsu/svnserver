@@ -21,7 +21,7 @@
 
 ##### UPLOAD FILE TEST FILE
   - copy:
-     src: /Users/superadmin/svnserver/helloworld.war
+     src: /your-local-path/svnserver/helloworld.war
      dest: /fbin/helloworld.war
      owner: root
      group: root
@@ -30,7 +30,7 @@
 
 ##### UPLOAD DOCKER FILE
   - copy:
-     src: /Users/superadmin/svnserver/Dockerfile
+     src: /your-local-path/svnserver/Dockerfile
      dest: /fbin/Dockerfile
      owner: root
      group: root
@@ -39,7 +39,7 @@
 
 ##### UPLOAD NGINX FOLDER
   - copy:
-     src: /Users/superadmin/svnserver/etc/
+     src: /your-local-path/svnserver/etc/
      dest: /fbin/etc/
      owner: root
      group: root
@@ -48,7 +48,7 @@
 
 ##### UPLOAD ENTRPOINT FILE 
   - copy:
-     src: /Users/superadmin/svnserver/entrypoint.sh
+     src: /your-local-path/svnserver/entrypoint.sh
      dest: /fbin/
      owner: root
      group: root
