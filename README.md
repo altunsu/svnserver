@@ -15,8 +15,9 @@ Usage
 
 Edit Ansible hosts file with your ip.
 
-Run command : #  ssh-copy-id youruser@your.server.ip.address
-              #  ansible-playbook playbook-svn-deploy.yaml -K
+Run below command : 
+ *  #ssh-copy-id youruser@your.server.ip.address
+ *  #ansible-playbook playbook-svn-deploy.yaml -K
 
 Author
 
@@ -28,5 +29,5 @@ Disclaim all warranties with regard to this documentation including all implied 
 
 
 Reminder !!!
-
-This documentation created test purpose, please use this script with your own risk.
+* Installation may take few time because of packages and internal installations.  
+* This documentation created test purpose, please use this script with your own risk.
