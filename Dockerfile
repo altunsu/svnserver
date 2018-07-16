@@ -4,7 +4,7 @@ FROM alpine:3.7
 # Setting Timezone
 ENV TIMEZONE Europe/London
 
-# Let's roll
+# Let's roll nginx
 RUN	apk update && \
 	apk upgrade && \
 	apk add --update openssl nginx openrc && \
@@ -33,6 +33,7 @@ COPY etc/conf.d/ssl.conf /etc/nginx/conf.d/ssl.conf
 # Expose volumes
 VOLUME ["/etc/nginx/conf.d", "/var/log/nginx", "/www"]
 
+# Copy our test file
 COPY helloworld.war /fbin/
 
 # Java Version
@@ -87,6 +88,8 @@ ENV PATH ${PATH}:${JAVA_HOME}/bin
 COPY entrypoint.sh /usr/bin
 RUN chmod +x /usr/bin/entrypoint.sh
 
+#Expose ports 80 8080 443
 EXPOSE 80 443  8080
 
+#Add entry point to our docker file
 ENTRYPOINT /usr/bin/entrypoint.sh >/dev/null 2>&1
