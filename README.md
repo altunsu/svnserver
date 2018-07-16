@@ -9,11 +9,14 @@ Recent running enviroment
 
 Pre-request 
 * Ansible 
-* Centos 7 minimum installed instance with ( ssh-key authentication enabled preferably).
+* Centos 7 minimum installed instance with ( ssh-key authentication enabled preferably or you can prefer user password way).
 
-Good to have implementation(s)
+Usage 
 
-Recently script don't provide system health check, file controller, alert features.
+Edit Ansible hosts file with your ip.
+
+Run command : #  ssh-copy-id youruser@your.server.ip.address
+              #  ansible-playbook playbook-svn-deploy.yaml -K
 
 Author
 
